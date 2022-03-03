@@ -1,0 +1,24 @@
+doctype html
+html(lang="en")
+  head
+    title= 'Node.js Template' 
+    script(type='text/javascript').
+      function getCurrentAvail(){
+
+        fetch("http://localhost:8080/logon.i4?LoginWebserviceId=#{token}")
+              .then(response => {
+                var newScript = document.createElement("script");
+                newScript.defer = true;
+                document.head.appendChild(newScript);
+                newScript.src = "http://localhost:8080/JsAPI/v3";
+                setTimeout(() => window.yellowfin.init().then(() => {
+                                yellowfin.loadDashboard({
+                                    dashboardUUID: 'de35f619-09fc-4733-97cd-d47f23b13cc3',
+                                    element: document.querySelector('div#myDashboardDiv'),
+                                })
+                    }), 100)
+        })
+      }
+      getCurrentAvail();
+  body
+    div#myDashboardDiv
